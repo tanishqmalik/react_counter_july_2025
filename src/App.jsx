@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import React from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
@@ -15,9 +15,20 @@ function App() {
     setCount(count-1);
   }
 
+  const [seconds, setSeconds] = useState(0)
+
+  useEffect(()=>{
+    const interval  = setInterval(()=>{
+      setSeconds(prev=>prev+1)
+    },1000);
+
+    return () => clearInterval(interval);
+  }, [])
+
+
   return (
     <>
-      <div className='main h-screen flex items-center justify-center w-full bg-blue-800'>
+      <div className='main h-screen flex flex-col gap-7 items-center justify-center w-full bg-blue-800'>
         <div className='flex h-96 items-center flex-col gap-7 min-w-auto rounded-4xl bg-yellow-400 p-6 w-3xl shadow-lg'>
           <h4 className='font-bold text-8xl text-shadow-lg'>counter</h4>
           <h2 className='font-bold text-5xl text-shadow-lg bg-amber-50 p-4 rounded-3xl'>{count}</h2>
@@ -26,6 +37,8 @@ function App() {
             <button className='font-bold text-6xl text-shadow-lg text-red-500'  onClick={down}>-</button>
           </div>
         </div>
+
+        <h2 className='font-bold text-5xl text-shadow-lg bg-amber-50 p-4 rounded-3xl'>Timer :- {seconds}</h2>
       </div>
     </>
   )
